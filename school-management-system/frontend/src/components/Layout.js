@@ -16,7 +16,7 @@ export const Navbar = () => {
   return (
     <nav className="bg-blue-600 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        <div className="text-xl font-bold">School Management System</div>
+        <div className="text-xl font-bold">Mother Teressa Convent School</div>
         
         <div className="hidden md:flex items-center gap-6">
           <span className="text-sm">Welcome, {user?.first_name || 'User'}</span>

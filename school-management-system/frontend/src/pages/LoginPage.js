@@ -51,7 +51,8 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">School Management System</h1>
+        <h1 className="text-2xl font-bold mb-2 text-center">Mother Teressa Convent School</h1>
+        <p className="text-center text-gray-600 text-sm mb-6">Learning Management System</p>
         
         {error && <Alert type="error" message={error} className="mb-4" />}
         

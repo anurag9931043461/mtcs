@@ -1,6 +1,7 @@
 {
-  "name": "school-management-system",
-  "version": "0.1.0",
+  "name": "mother-teressa-lms",
+  "version": "1.0.0",
+  "description": "Mother Teressa Convent School - Learning Management System",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
