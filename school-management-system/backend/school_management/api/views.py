@@ -266,15 +266,24 @@ class TokenAuthView(APIView):
     permission_classes = []
     
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        # Try to get data from both request.data and request.POST
+        username = request.data.get('username') or request.POST.get('username')
+        password = request.data.get('password') or request.POST.get('password')
+        
+        logger.info(f"Auth attempt - Username: {username}, Data: {request.data}")
         
         if not username or not password:
+            logger.warning("Missing username or password in request")
             return Response({'error': 'Missing username or password'}, status=status.HTTP_400_BAD_REQUEST)
         
         user = authenticate(username=username, password=password)
         if not user:
+            logger.warning(f"Authentication failed for user: {username}")
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         
+        logger.info(f"Authentication successful for user: {username}")
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key, 'user_id': user.id})
