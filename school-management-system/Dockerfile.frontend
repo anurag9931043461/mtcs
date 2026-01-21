@@ -1,0 +1,16 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy frontend code
+COPY frontend/ .
+
+# Install dependencies
+RUN npm install
+
+# Build for production
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
