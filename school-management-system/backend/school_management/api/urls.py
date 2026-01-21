@@ -1,13 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rest_framework.authtoken.views import obtain_auth_token
 from .views import (
     UserViewSet, AcademicYearViewSet, SchoolViewSet, ClassViewSet,
     SubjectViewSet, StudentViewSet, ParentViewSet, StaffViewSet,
     AttendanceRecordViewSet, FeeStructureViewSet, FeePaymentViewSet,
     ExamViewSet, MarkViewSet, ResultViewSet, TransportRouteViewSet,
     VehicleViewSet, HomeworkViewSet, NotificationViewSet,
-    LibraryBookViewSet, ComplaintViewSet, CertificateViewSet
+    LibraryBookViewSet, ComplaintViewSet, CertificateViewSet,
+    TokenAuthView
 )
 
 router = DefaultRouter()
@@ -35,5 +35,5 @@ router.register(r'certificates', CertificateViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('auth/token/', obtain_auth_token, name='api_token_auth'),
+    path('auth/token/', TokenAuthView.as_view(), name='token_auth'),
 ]

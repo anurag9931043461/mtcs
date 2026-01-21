@@ -2,6 +2,9 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
 from django_filters.rest_framework import DjangoFilterBackend
 from school_management.core.models import (
     User, AcademicYear, School, Class, Subject, Student, Parent, Staff,
@@ -255,3 +258,23 @@ class CertificateViewSet(viewsets.ModelViewSet):
     serializer_class = CertificateSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['certificate_type', 'student']
+
+
+class TokenAuthView(APIView):
+    """Custom token authentication view"""
+    authentication_classes = []
+    permission_classes = []
+    
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        if not username or not password:
+            return Response({'error': 'Missing username or password'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = authenticate(username=username, password=password)
+        if not user:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key, 'user_id': user.id})
